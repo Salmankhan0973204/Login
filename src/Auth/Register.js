@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Card, Button, Form, Container } from "react-bootstrap";
+import { Card, Button, Form,  } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import axios from "axios";
 
 function Register() {
   const [reg, setreg] = useState({
@@ -19,6 +20,12 @@ function Register() {
   const submit = (e) => {
     e.preventDefault();
     console.log(reg);
+    axios.post("http://localhost:8000/Register", reg).then(
+      (res) => console.log("User Register"),
+      (error) => {
+        console.log("Registration Failed");
+      }
+    );
   };
   return (
     <div>

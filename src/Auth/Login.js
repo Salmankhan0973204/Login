@@ -1,16 +1,32 @@
 import React, { useState } from "react";
 import { Card, Button, Form, Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import  axios  from "axios";
 function Login() {
 
-  const [email, setemail] = useState("")
-  const [password, setpassword] = useState("");
-  const [formdata, setformdata] = useState([])
+  const [login, setLogin] = useState({
+    email: "",
+    password: ""
+  })
 
-  const submit = () => {
-    setformdata({ email: email, password: password })
-    console.log(formdata)
+  const handle = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setLogin({ ...login, [name]: value })
+    
   }
+
+
+  const submit = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:8000/Login",login).then(
+      (res) => console.log("Login Succesful"),
+      (error) => {
+        console.log("Login Failed");
+      }
+    )
+  }
+
   return (
     <div>
       <Card
@@ -24,27 +40,31 @@ function Login() {
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
-                value={email}
+                name="email"
+                value={login.email}
                 placeholder="Enter email"
-                onChange={(e) => setemail(e.target.value)}
+                onChange={handle}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                name="password"
                 type="password"
-                value={password}
+                value={login.password}
                 placeholder="Password"
-                onChange={(e) => setpassword(e.target.value)}
+                onChange={handle}
               />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
             </Button>
             <hr style={{ backgroundColor: "white" }} />
-            <Switch><Link to="/Register">
-              <Button variant="warning">New Registration</Button>
-            </Link></Switch>
+            <Switch>
+              <Link to="/Register">
+                <Button variant="warning">New Registration</Button>
+              </Link>
+            </Switch>
           </Form>
         </Card.Body>
       </Card>
