@@ -1,31 +1,29 @@
 import React, { useState } from "react";
 import { Card, Button, Form, Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import  axios  from "axios";
+import axios from "axios";
 function Login() {
-
+  
   const [login, setLogin] = useState({
     email: "",
-    password: ""
-  })
+    password: "",
+  });
 
   const handle = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setLogin({ ...login, [name]: value })
-    
-  }
-
+    setLogin({ ...login, [name]: value });
+  };
 
   const submit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8000/Login",login).then(
-      (res) => console.log("Login Succesful"),
+    axios.post("http://localhost:8000/Login", login).then(
+      (res) => console.log(res.data),
       (error) => {
         console.log("Login Failed");
       }
-    )
-  }
+    );
+  };
 
   return (
     <div>
@@ -56,21 +54,23 @@ function Login() {
                 onChange={handle}
               />
             </Form.Group>
+          
+              <Link to="/ToDoList">
             <Button variant="primary" type="submit">
               Submit
-            </Button>
+              </Button>
+              </Link>
             <hr style={{ backgroundColor: "white" }} />
-            <Switch>
+           
               <Link to="/Register">
                 <Button variant="warning">New Registration</Button>
               </Link>
-            </Switch>
+           
           </Form>
         </Card.Body>
       </Card>
     </div>
   );
- 
 }
 
 export default Login;

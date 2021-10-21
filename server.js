@@ -22,11 +22,16 @@ const DB =
     .then(() => { console.log("MongoDBconnected") })
     .catch(() => { console.log("Mongo Connection Failed") });
     
-  const LoginController = require("./backend/Controllers/LoginController")  
+const LoginController = require("./backend/Controllers/LoginController")
+const ToDoController = require("./backend/Controllers/ToDoController")
 
-//  Login APi
+//  Login API
 app.post("/Register", LoginController.Register);
 app.post("/Login", LoginController.Login);
+
+//ToDo API
+app.post("/ToDo", ToDoController.ToDoList);
+app.get("/GetToDo", ToDoController.GetToDo);
 
 
   
